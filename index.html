@@ -66,6 +66,7 @@ texCont.addEventListener("click", function (){
 if(this.textContent!="")  { 
 
     writeClipboardText(this.textContent);
+     this.classList.add("active");
     this.setAttribute("data-tooltip","Copiado!")
     console.log("Copiado!");
 }

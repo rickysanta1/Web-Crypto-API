@@ -207,7 +207,11 @@
 .output:hover::before {
   display: block;  /* display both tooltip and arrow mark when a is hovered on */
 }
-
+.output.active::after {
+        display: block;
+      
+    }
+    
         input::placeholder,
         textarea::placeholder {
             color: #aaa;

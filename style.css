@@ -167,11 +167,43 @@
         }
 
         .output {
+            position: relative;
             min-height: 4.2rem;
             overflow-wrap: break-word;
             word-wrap: break-word;
             word-break: break-all;
         }
+        
+        .output::after,
+.output::before {
+  position: absolute;
+  display: none;  /* initially hide it from view */
+}
+.output::before {
+  content: '';
+  top: -2px;
+  left: 6px;
+  height: 0px;
+  width: 0px;
+  /* the arrow */
+  border-left: 5px solid transparent;
+  border-top: 5px solid #1a2d4b;
+  border-right: 5px solid transparent;
+}
+.output::after {
+  content: attr(data-tooltip);  /* set content of pseudo element as the value of data-tooltip attribute */
+  top: -25px;
+  left: -5px;
+  background: #1a2d4b;
+  border-radius: 4px;  /* just a bit of extra styling */
+  padding: 2px 6px;
+  white-space: nowrap;
+  color: rgb(247, 224, 224);
+}
+.output:hover::after,
+.output:hover::before {
+  display: block;  /* display both tooltip and arrow mark when a is hovered on */
+}
 
         input::placeholder,
         textarea::placeholder {
@@ -216,11 +248,6 @@
             cursor: pointer;
         }
 
-        .output:hover {
-            color: #fff;
-            background: #de153b;
-            cursor: pointer;
-        }
 
         button:active {
             transform: translateY(2px);

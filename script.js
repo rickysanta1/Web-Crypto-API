@@ -1,8 +1,8 @@
 // Derivar la clave desde la contraseña usando PBKDF2
 async function deriveKey(text, algo,salt=false) {
       // Generar salt aleatorio (8/16 bytes)
-    salt = salt?salt:new TextEncoder("utf-8").encode("salto");
-    // salt = salt?salt:crypto.getRandomValues(new Uint8Array(8));
+    // salt = salt?salt:new TextEncoder("utf-8").encode("salto");
+    salt = salt?salt:crypto.getRandomValues(new Uint8Array(8));
 // Convertir todo a hexadecimal
     const bufferToHex = buffer => Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
     

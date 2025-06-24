@@ -60,6 +60,23 @@
     </div>
 
     <script>
+
+ const texCont= document.getElementById('encryptedOutput');
+texCont.addEventListener("click", function (this){
+
+    writeClipboardText(this.textContent);
+    console.error(this.textContent);
+});
+
+async function writeClipboardText(text) {
+  try {
+    await navigator.clipboard.writeText(text);
+  } catch (error) {
+    console.error(error.message);
+  }
+}
+
+
         const encrypt = async (key, text) => {
 const encrypted = await encryptText(text, key);
             document.getElementById('encryptedOutput').textContent = encrypted;

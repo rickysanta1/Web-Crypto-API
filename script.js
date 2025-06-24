@@ -7,7 +7,6 @@ async function deriveKey(text, algo,salt=false) {
     const bufferToHex = buffer => Array.from(new Uint8Array(buffer)).map(b => b.toString(16).padStart(2, '0')).join('');
     
         const keyMaterial = await crypto.subtle.importKey("raw",new TextEncoder().encode(text),{ name: "PBKDF2" },false,["deriveKey"]);
-// console.log(bufferToHex(salt).length)
 
     const key = await crypto.subtle.deriveKey({name: "PBKDF2", salt: salt,iterations: 100000,hash: "SHA-256"},keyMaterial,{ name: algo, length: 256 },false,["encrypt", "decrypt"]);
 
@@ -18,6 +17,7 @@ async function encryptText(text, password) {
     // Codificar el texto a cifrar
     const encoder = new TextEncoder();
     const data = encoder.encode(text);
+console.log("Encriptando!")
 
     const {key,salt} = await deriveKey(password, "AES-GCM");
 

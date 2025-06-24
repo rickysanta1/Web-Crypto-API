@@ -215,8 +215,8 @@
             background: #de153b;
             cursor: pointer;
         }
-        
-        #encryptedOutput:hover {
+
+        .output:hover {
             color: #fff;
             background: #de153b;
             cursor: pointer;

@@ -64,7 +64,9 @@
  const texCont= document.getElementById('encryptedOutput');
 texCont.addEventListener("click", function (){
 if(this.textContent!="")  { 
+
     writeClipboardText(this.textContent);
+    texCont.setAttribute("data-tooltip","Copiado!")
     console.log("Copiado!");
 }
 });

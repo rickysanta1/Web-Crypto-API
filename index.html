@@ -1,0 +1,462 @@
+<!-- CREDITS: https://dev.to/halan/4-ways-of-symmetric-cryptography-and-javascript-how-to-aes-with-javascript-3o1b -->
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Web Crypto API</title>
+    <meta name="description" content="AES symmetric encryption and decryption using the javascript Crypto API.">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom right, #041822 0%, #111 100%);
+            font-family: 'Lato', sans-serif;
+        }
+
+        .wrapper {
+            width: 70vw;
+            margin: 2em auto;
+            overflow: hidden;
+        }
+
+        .header {
+            color: #f9214a;
+            font-size: 18px;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .container {
+            width: 200%;
+            height: 100%;
+            margin-top: 50px;
+        }
+
+        .container>div {
+            height: 100%;
+            width: 50%;
+            float: left;
+        }
+
+        .toggle {
+            margin-top: 50px;
+        }
+
+        .toggle .radio {
+            position: relative;
+            color: #eee;
+            padding-left: 35px;
+            margin: 50px 10px 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .toggle .radio input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #aaa;
+            border-radius: 50%;
+        }
+
+        .toggle .radio:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        .toggle .radio input:checked~.checkmark {
+            background-color: #f9214a;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .toggle .radio input:checked~.checkmark:after {
+            display: block;
+        }
+
+        .toggle .radio .checkmark:after {
+            top: 9px;
+            left: 9px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            letter-spacing: .125rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            line-height: 4rem;
+        }
+
+        h2 {
+            color: #fff;
+            font-size: 1.5rem;
+            line-height: 1.5rem;
+            text-align: center;
+            padding-bottom: 5px;
+        }
+
+        .col-30 {
+            float: left;
+            width: 30%;
+        }
+
+        .col-70 {
+            float: left;
+            width: 65%;
+            margin-left: 5%;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        form {
+            padding: 2px;
+            overflow: hidden;
+        }
+
+        input:not([type=radio]),
+        textarea,
+        .output {
+            width: 100%;
+            font-family: 'Lato', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 300;
+            padding: 1rem 0;
+            border: 0;
+            border-bottom: 1px solid #f9214a;
+            outline: 0;
+            background: transparent;
+            color: #fff;
+            letter-spacing: .125rem;
+        }
+
+        textarea {
+            margin: 12px 0 10px;
+            resize: none;
+            overflow: hidden;
+            padding: 5px 0;
+            height: 45px;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .output {
+            min-height: 4.2rem;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #aaa;
+        }
+
+        input:required,
+        textarea:required {
+            box-shadow:none;
+        }
+
+        input:focus::placeholder,
+        textarea:focus::placeholder {
+            color: #555;
+        }
+
+        ::selection {
+            background: rgba(249, 33, 74, 0.25);
+        }
+
+        ::-moz-selection {
+            background: rgba(249, 33, 74, 0.25);
+        }
+
+        button {
+            width: 150px;
+            padding: 0.9em 0;
+            margin: 20px 0 0 10px;
+            border: 0;
+            outline: 0;
+            background: #f9214a;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: .0625rem;
+            float: right;
+        }
+
+        button:hover {
+            color: #fff;
+            background: #de153b;
+            cursor: pointer;
+        }
+
+        button:active {
+            transform: translateY(2px);
+        }
+
+        .slide-left {
+            animation: slideLeft 1s ease;
+        }
+
+        @keyframes slideLeft {
+            0% {
+                transform: translateX(0px);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .col-30,
+            .col-70 {
+                width: 100% !important;
+                margin-top: 0;
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <h1>Web Crypto API</h1>
+            <p>AES with JavaScript</p>
+            <div class="toggle">
+                <label class="radio">Encrypt
+                    <input type="radio" checked="checked" name="radio" onclick="toggleForms(this)" value="1">
+                    <span class="checkmark"></span>
+                </label>
+                <label class="radio">Decrypt
+                    <input type="radio" name="radio" onclick="toggleForms(this)" value="2">
+                    <span class="checkmark"></span>
+                </label>
+            </div>
+        </div>
+        <div id="forms" class="container">
+            <div id="form1">
+                <form name="form1">
+                    <div class="row">
+                        <div class="col-30"><input id="key1" type="text" placeholder="secret key" required></div>
+                        <div class="col-70"><textarea id="toEncrypt" placeholder="text to encrypt" required></textarea></div>
+                    </div>
+                    <div class="row">
+                        <div id="encryptedOutput" class="output"></div>
+                    </div>
+                    <button id="encrypt" type="button">Encrypt</button>
+                    <button class="clear" name="clear1" type="button">Clear</button>
+                </form>
+            </div>
+            <div id="form2" class="hidden">
+                <form name="form2">
+                    <div class="row">
+                        <div class="col-30"><input id="key2" type="text" placeholder="secret key" required></div>
+                        <div class="col-70"><textarea id="toDecrypt" placeholder="text to decrypt" required></textarea></div>
+                    </div>
+                    <div class="row">
+                        <div id="decryptedOutput" class="output"></div>
+                    </div>
+                    <button id="decrypt" type="button">Decrypt</button>
+                    <button class="clear" name="clear2" type="button">Clear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const encoder = new TextEncoder();
+
+        const importSecretKey = async (key, salt, iterations,
+            length, hash, algorithm) => {
+            const keyMaterial = await window.crypto.subtle.importKey(
+                'raw',
+                encoder.encode(key), {
+                    name: 'PBKDF2'
+                },
+                false,
+                ['deriveKey']
+            );
+
+            return window.crypto.subtle.deriveKey({
+                    name: 'PBKDF2',
+                    salt: encoder.encode(salt),
+                    iterations,
+                    hash
+                },
+                keyMaterial, {
+                    name: algorithm,
+                    length
+                },
+                false,
+                ['encrypt', 'decrypt']
+            );
+        };
+
+        const encrypt = async (key, text) => {
+
+            const toBase64 = buffer =>
+                btoa(String.fromCharCode(...new Uint8Array(buffer)));
+
+            let ciphertext = encoder.encode(text),
+                salt = window.crypto.getRandomValues(new Uint8Array(16)),
+                iv = window.crypto.getRandomValues(new Uint8Array(16));
+
+            const secretKey = await importSecretKey(key, salt, 100000, 256, 'SHA-256', 'AES-CBC');
+
+            const encrypted = await window.crypto.subtle.encrypt({
+                    name: "AES-CBC",
+                    iv
+                },
+                secretKey,
+                ciphertext
+            );
+
+            document.getElementById('encryptedOutput').textContent = toBase64([
+                ...salt, ...iv, ...new Uint8Array(encrypted)]);
+        };
+
+        const decrypt = async (key, encrypted) => {
+
+            const decoder = new TextDecoder();
+            const fromBase64 = buffer =>
+                Uint8Array.from(atob(buffer), c => c.charCodeAt(0));
+            const len = 16;
+
+            let ciphertext = fromBase64(encrypted),
+                salt = ciphertext.slice(0, len),
+                iv = ciphertext.slice(len, len * 2);
+
+            const secretKey = await importSecretKey(key, salt, 100000, 256, 'SHA-256', 'AES-CBC');
+
+            await window.crypto.subtle.decrypt({
+                    name: "AES-CBC",
+                    iv
+                },
+                secretKey,
+                ciphertext.slice(len * 2)
+
+            ).then(decrypted => {
+                document.getElementById('decryptedOutput').textContent = decoder.decode(decrypted);
+            }).catch(err => {
+                document.getElementById('decryptedOutput').textContent = "ERROR: wrong key!";
+                //console.error(err);
+            });
+        };
+
+        const toggleForms = radio => {
+            let forms = document.getElementById('forms'),
+                form = document.getElementById('form'+radio.value),
+                prev = form.previousElementSibling;
+            if (form.classList.contains('hidden')) {
+                forms.addEventListener('animationend', function() {
+                    this.classList.remove('slide-left');
+                    form.classList.remove('hidden');
+                    forms.removeChild(prev);
+                    forms.appendChild(prev);
+                }, {once: true});
+                prev.classList.add('hidden');
+                forms.classList.add('slide-left');
+            }
+        };
+
+        const autoGrow = element => {
+            element.style.height = "35px";
+            element.style.height = (element.scrollHeight) + 10 + "px";
+        };
+
+        const clearForm = form => {
+            form.reset();
+            if (form.name === 'form1') {
+                autoGrow(toEncrypt);
+            } else {
+                autoGrow(toDecrypt);
+            }
+        };
+
+        const key1 = document.getElementById('key1'),
+            key2 = document.getElementById('key2'),
+            toDecrypt = document.getElementById('toDecrypt'),
+            toEncrypt = document.getElementById('toEncrypt');
+
+        toEncrypt.addEventListener('input', event => {
+            autoGrow(event.target);
+        });
+
+        toDecrypt.addEventListener('input', event => {
+            autoGrow(event.target);
+        });
+
+        document.getElementById('encrypt').addEventListener('click', () => {
+            if (!document.form1.checkValidity()) {
+                document.form1.reportValidity();
+            } else {
+                encrypt(key1.value, toEncrypt.value);
+            }
+        });
+
+        document.getElementById('decrypt').addEventListener('click', () => {
+            if (!document.form2.checkValidity()) {
+                document.form2.reportValidity();
+            } else {
+                decrypt(key2.value, toDecrypt.value).catch(err => {
+                    document.getElementById('decryptedOutput').textContent = "ERROR: encrypted text corrupted!";
+                    //console.error(err);
+                });
+            }
+        });
+
+        document.querySelectorAll('.clear').forEach(item => {
+            item.addEventListener('click', event => {
+                if (event.target.name === "clear1") {
+                    document.getElementById('encryptedOutput').textContent = "";
+                } else {
+                    document.getElementById('decryptedOutput').textContent = "";
+                }
+                clearForm(event.target.closest('form'));
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -60,33 +60,33 @@
     </div>
 
     <script>
-        const encoder = new TextEncoder();
+        // const encoder = new TextEncoder();
 
-        const importSecretKey = async (key, salt, iterations,
-            length, hash, algorithm) => {
-            const keyMaterial = await window.crypto.subtle.importKey(
-                'raw',
-                encoder.encode(key), {
-                    name: 'PBKDF2'
-                },
-                false,
-                ['deriveKey']
-            );
+        // const importSecretKey = async (key, salt, iterations,
+        //     length, hash, algorithm) => {
+        //     const keyMaterial = await window.crypto.subtle.importKey(
+        //         'raw',
+        //         encoder.encode(key), {
+        //             name: 'PBKDF2'
+        //         },
+        //         false,
+        //         ['deriveKey']
+        //     );
 
-            return window.crypto.subtle.deriveKey({
-                    name: 'PBKDF2',
-                    salt: encoder.encode(salt),
-                    iterations,
-                    hash
-                },
-                keyMaterial, {
-                    name: algorithm,
-                    length
-                },
-                false,
-                ['encrypt', 'decrypt']
-            );
-        };
+        //     return window.crypto.subtle.deriveKey({
+        //             name: 'PBKDF2',
+        //             salt: encoder.encode(salt),
+        //             iterations,
+        //             hash
+        //         },
+        //         keyMaterial, {
+        //             name: algorithm,
+        //             length
+        //         },
+        //         false,
+        //         ['encrypt', 'decrypt']
+        //     );
+        // };
 
         const encrypt = async (key, text) => {
 const encrypted = await encryptText(text, key);
@@ -137,12 +137,13 @@ const encrypted = await encryptText(text, key);
             // ).then(decrypted => {
                 document.getElementById('decryptedOutput').textContent = decrypted;
          } catch (error) {
-        console.error("Error:", error);
+       
    
             // }).catch(err => {
                 document.getElementById('decryptedOutput').textContent = "ERROR: wrong key!";
                 //console.error(err);
             // });
+         console.error("Error:", error);
              }
         };
 

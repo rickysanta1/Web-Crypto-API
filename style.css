@@ -194,7 +194,7 @@
 }
 .output::after {
   content: attr(data-tooltip);  /* set content of pseudo element as the value of data-tooltip attribute */
-  top: -425px;
+  top: -125px;
   right: 5px;
   background: #1a2d4b;
   border-radius: 4px;  /* just a bit of extra styling */

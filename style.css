@@ -1,0 +1,244 @@
+  * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom right, #041822 0%, #111 100%);
+            font-family: 'Lato', sans-serif;
+        }
+
+        .wrapper {
+            width: 70vw;
+            margin: 2em auto;
+            overflow: hidden;
+        }
+
+        .header {
+            color: #f9214a;
+            font-size: 18px;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .container {
+            width: 200%;
+            height: 100%;
+            margin-top: 50px;
+        }
+
+        .container>div {
+            height: 100%;
+            width: 50%;
+            float: left;
+        }
+
+        .toggle {
+            margin-top: 50px;
+        }
+
+        .toggle .radio {
+            position: relative;
+            color: #eee;
+            padding-left: 35px;
+            margin: 50px 10px 12px;
+            cursor: pointer;
+            font-size: 22px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .toggle .radio input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #aaa;
+            border-radius: 50%;
+        }
+
+        .toggle .radio:hover input~.checkmark {
+            background-color: #ccc;
+        }
+
+        .toggle .radio input:checked~.checkmark {
+            background-color: #f9214a;
+        }
+
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .toggle .radio input:checked~.checkmark:after {
+            display: block;
+        }
+
+        .toggle .radio .checkmark:after {
+            top: 9px;
+            left: 9px;
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: white;
+        }
+
+        h1,
+        h2 {
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            letter-spacing: .125rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            line-height: 4rem;
+        }
+
+        h2 {
+            color: #fff;
+            font-size: 1.5rem;
+            line-height: 1.5rem;
+            text-align: center;
+            padding-bottom: 5px;
+        }
+
+        .col-30 {
+            float: left;
+            width: 30%;
+        }
+
+        .col-70 {
+            float: left;
+            width: 65%;
+            margin-left: 5%;
+        }
+
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        form {
+            padding: 2px;
+            overflow: hidden;
+        }
+
+        input:not([type=radio]),
+        textarea,
+        .output {
+            width: 100%;
+            font-family: 'Lato', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 300;
+            padding: 1rem 0;
+            border: 0;
+            border-bottom: 1px solid #f9214a;
+            outline: 0;
+            background: transparent;
+            color: #fff;
+            letter-spacing: .125rem;
+        }
+
+        textarea {
+            margin: 12px 0 10px;
+            resize: none;
+            overflow: hidden;
+            padding: 5px 0;
+            height: 45px;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        .output {
+            min-height: 4.2rem;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-all;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #aaa;
+        }
+
+        input:required,
+        textarea:required {
+            box-shadow:none;
+        }
+
+        input:focus::placeholder,
+        textarea:focus::placeholder {
+            color: #555;
+        }
+
+        ::selection {
+            background: rgba(249, 33, 74, 0.25);
+        }
+
+        ::-moz-selection {
+            background: rgba(249, 33, 74, 0.25);
+        }
+
+        button {
+            width: 150px;
+            padding: 0.9em 0;
+            margin: 20px 0 0 10px;
+            border: 0;
+            outline: 0;
+            background: #f9214a;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: .0625rem;
+            float: right;
+        }
+
+        button:hover {
+            color: #fff;
+            background: #de153b;
+            cursor: pointer;
+        }
+
+        button:active {
+            transform: translateY(2px);
+        }
+
+        .slide-left {
+            animation: slideLeft 1s ease;
+        }
+
+        @keyframes slideLeft {
+            0% {
+                transform: translateX(0px);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .col-30,
+            .col-70 {
+                width: 100% !important;
+                margin-top: 0;
+                margin-left: 0;
+            }
+        }

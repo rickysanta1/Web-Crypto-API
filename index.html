@@ -63,9 +63,10 @@
 
  const texCont= document.getElementById('encryptedOutput');
 texCont.addEventListener("click", function (){
-
+if(this.textContent!="")  { 
     writeClipboardText(this.textContent);
     console.log("Copiado!");
+}
 });
 
 async function writeClipboardText(text) {

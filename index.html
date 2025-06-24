@@ -72,7 +72,7 @@ const encrypted = await encryptText(text, key);
             document.getElementById('decryptedOutput').textContent = decrypted;
          } catch (error) {
                 document.getElementById('decryptedOutput').textContent = "ERROR: wrong key!";
-         console.error("Error:", error);
+         console.error("Error:", error.toString());
              }
         };
 

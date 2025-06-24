@@ -112,31 +112,38 @@ const encrypted = await encryptText(text, key);
         };
 
         const decrypt = async (key, encrypted) => {
+    try {
+        const decrypted = await decryptText(encrypted, key);
+        console.log("Desencriptado:", decrypted);
+   
+            // const decoder = new TextDecoder();
+            // const fromBase64 = buffer =>
+            //     Uint8Array.from(atob(buffer), c => c.charCodeAt(0));
+            // const len = 16;
 
-            const decoder = new TextDecoder();
-            const fromBase64 = buffer =>
-                Uint8Array.from(atob(buffer), c => c.charCodeAt(0));
-            const len = 16;
+            // let ciphertext = fromBase64(encrypted),
+            //     salt = ciphertext.slice(0, len),
+            //     iv = ciphertext.slice(len, len * 2);
 
-            let ciphertext = fromBase64(encrypted),
-                salt = ciphertext.slice(0, len),
-                iv = ciphertext.slice(len, len * 2);
+            // const secretKey = await importSecretKey(key, salt, 100000, 256, 'SHA-256', 'AES-CBC');
 
-            const secretKey = await importSecretKey(key, salt, 100000, 256, 'SHA-256', 'AES-CBC');
+            // await window.crypto.subtle.decrypt({
+            //         name: "AES-CBC",
+            //         iv
+            //     },
+            //     secretKey,
+            //     ciphertext.slice(len * 2)
 
-            await window.crypto.subtle.decrypt({
-                    name: "AES-CBC",
-                    iv
-                },
-                secretKey,
-                ciphertext.slice(len * 2)
-
-            ).then(decrypted => {
-                document.getElementById('decryptedOutput').textContent = decoder.decode(decrypted);
-            }).catch(err => {
+            // ).then(decrypted => {
+                document.getElementById('decryptedOutput').textContent = decrypted;
+         } catch (error) {
+        console.error("Error:", error);
+   
+            // }).catch(err => {
                 document.getElementById('decryptedOutput').textContent = "ERROR: wrong key!";
                 //console.error(err);
-            });
+            // });
+             }
         };
 
         const toggleForms = radio => {

@@ -63,6 +63,6 @@ async function decryptText(encryptedHex, password) {
         const decrypted = await decryptText(encrypted, password);
         console.log("Desencriptado:", decrypted);
     } catch (error) {
-        console.error("Error:", error.toString());
+        console.error("Error:", error);
     }
 })();

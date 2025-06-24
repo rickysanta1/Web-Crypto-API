@@ -89,26 +89,26 @@
         };
 
         const encrypt = async (key, text) => {
+const encrypted = await encryptText(text, key);
+            // const toBase64 = buffer =>
+            //     btoa(String.fromCharCode(...new Uint8Array(buffer)));
 
-            const toBase64 = buffer =>
-                btoa(String.fromCharCode(...new Uint8Array(buffer)));
+            // let ciphertext = encoder.encode(text),
+            //     salt = window.crypto.getRandomValues(new Uint8Array(16)),
+            //     iv = window.crypto.getRandomValues(new Uint8Array(16));
 
-            let ciphertext = encoder.encode(text),
-                salt = window.crypto.getRandomValues(new Uint8Array(16)),
-                iv = window.crypto.getRandomValues(new Uint8Array(16));
+            // const secretKey = await importSecretKey(key, salt, 100000, 256, 'SHA-256', 'AES-CBC');
 
-            const secretKey = await importSecretKey(key, salt, 100000, 256, 'SHA-256', 'AES-CBC');
+            // const encrypted = await window.crypto.subtle.encrypt({
+            //         name: "AES-CBC",
+            //         iv
+            //     },
+            //     secretKey,
+            //     ciphertext
+            // );
 
-            const encrypted = await window.crypto.subtle.encrypt({
-                    name: "AES-CBC",
-                    iv
-                },
-                secretKey,
-                ciphertext
-            );
-
-            document.getElementById('encryptedOutput').textContent = toBase64([
-                ...salt, ...iv, ...new Uint8Array(encrypted)]);
+            // document.getElementById('encryptedOutput').textContent = toBase64([ ...salt, ...iv, ...new Uint8Array(encrypted)]);
+            document.getElementById('encryptedOutput').textContent = encrypted;
         };
 
         const decrypt = async (key, encrypted) => {

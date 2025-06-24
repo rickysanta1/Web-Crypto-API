@@ -215,6 +215,11 @@
             background: #de153b;
             cursor: pointer;
         }
+        #encryptedOutput:hover {
+            color: #fff;
+            background: #de153b;
+            cursor: pointer;
+        }
 
         button:active {
             transform: translateY(2px);

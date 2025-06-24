@@ -181,19 +181,21 @@
 }
 .output::before {
   content: '';
-  top: -52px;
-  right: 6px;
+  top: -2px;
+  left: 6px;
   height: 0px;
   width: 0px;
-  /* the arrow */
+  /* the arrow 
   border-left: 5px solid transparent;
   border-top: 5px solid #1a2d4b;
   border-right: 5px solid transparent;
+*/
+
 }
 .output::after {
   content: attr(data-tooltip);  /* set content of pseudo element as the value of data-tooltip attribute */
-  top: -25px;
-  left: -5px;
+  top: -425px;
+  right: 5px;
   background: #1a2d4b;
   border-radius: 4px;  /* just a bit of extra styling */
   padding: 2px 6px;

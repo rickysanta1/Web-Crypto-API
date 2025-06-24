@@ -181,10 +181,11 @@
 }
 .output::before {
   content: '';
-  top: -2px;
-  left: 6px;
+  top: 35px;
+  right: 9px;
   height: 0px;
   width: 0px;
+
   /* the arrow 
   border-left: 5px solid transparent;
   border-top: 5px solid #1a2d4b;

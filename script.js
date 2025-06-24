@@ -52,17 +52,17 @@ async function decryptText(encryptedHex, password) {
 }
 
 // Ejemplo de uso
-(async () => {
-    const password = "MiContrasenaSecreta!";
-    const textoOriginal = "couch hire reopen joy catch duck crouch citizen expose merit rib ring";
-    console.log("textoOriginal:", textoOriginal);
-    try {
-        const encrypted = await encryptText(textoOriginal, password);
-        console.log("Encriptado:", encrypted);
+// (async () => {
+//     const password = "MiContrasenaSecreta!";
+//     const textoOriginal = "couch hire reopen joy catch duck crouch citizen expose merit rib ring";
+//     console.log("textoOriginal:", textoOriginal);
+//     try {
+//         const encrypted = await encryptText(textoOriginal, password);
+//         console.log("Encriptado:", encrypted);
         
-        const decrypted = await decryptText(encrypted, password);
-        console.log("Desencriptado:", decrypted);
-    } catch (error) {
-        console.error("Error:", error);
-    }
-})();
+//         const decrypted = await decryptText(encrypted, password);
+//         console.log("Desencriptado:", decrypted);
+//     } catch (error) {
+//         console.error("Error:", error);
+//     }
+// })();

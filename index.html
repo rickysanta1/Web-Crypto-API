@@ -62,10 +62,10 @@
     <script>
 
  const texCont= document.getElementById('encryptedOutput');
-texCont.addEventListener("click", function (this){
+texCont.addEventListener("click", function (){
 
     writeClipboardText(this.textContent);
-    console.error(this.textContent);
+    console.log(this.textContent);
 });
 
 async function writeClipboardText(text) {

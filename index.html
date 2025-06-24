@@ -60,89 +60,18 @@
     </div>
 
     <script>
-        // const encoder = new TextEncoder();
-
-        // const importSecretKey = async (key, salt, iterations,
-        //     length, hash, algorithm) => {
-        //     const keyMaterial = await window.crypto.subtle.importKey(
-        //         'raw',
-        //         encoder.encode(key), {
-        //             name: 'PBKDF2'
-        //         },
-        //         false,
-        //         ['deriveKey']
-        //     );
-
-        //     return window.crypto.subtle.deriveKey({
-        //             name: 'PBKDF2',
-        //             salt: encoder.encode(salt),
-        //             iterations,
-        //             hash
-        //         },
-        //         keyMaterial, {
-        //             name: algorithm,
-        //             length
-        //         },
-        //         false,
-        //         ['encrypt', 'decrypt']
-        //     );
-        // };
-
         const encrypt = async (key, text) => {
 const encrypted = await encryptText(text, key);
-            // const toBase64 = buffer =>
-            //     btoa(String.fromCharCode(...new Uint8Array(buffer)));
-
-            // let ciphertext = encoder.encode(text),
-            //     salt = window.crypto.getRandomValues(new Uint8Array(16)),
-            //     iv = window.crypto.getRandomValues(new Uint8Array(16));
-
-            // const secretKey = await importSecretKey(key, salt, 100000, 256, 'SHA-256', 'AES-CBC');
-
-            // const encrypted = await window.crypto.subtle.encrypt({
-            //         name: "AES-CBC",
-            //         iv
-            //     },
-            //     secretKey,
-            //     ciphertext
-            // );
-
-            // document.getElementById('encryptedOutput').textContent = toBase64([ ...salt, ...iv, ...new Uint8Array(encrypted)]);
             document.getElementById('encryptedOutput').textContent = encrypted;
         };
 
         const decrypt = async (key, encrypted) => {
     try {
         const decrypted = await decryptText(encrypted, key);
-        console.log("Desencriptado:", decrypted);
-   
-            // const decoder = new TextDecoder();
-            // const fromBase64 = buffer =>
-            //     Uint8Array.from(atob(buffer), c => c.charCodeAt(0));
-            // const len = 16;
-
-            // let ciphertext = fromBase64(encrypted),
-            //     salt = ciphertext.slice(0, len),
-            //     iv = ciphertext.slice(len, len * 2);
-
-            // const secretKey = await importSecretKey(key, salt, 100000, 256, 'SHA-256', 'AES-CBC');
-
-            // await window.crypto.subtle.decrypt({
-            //         name: "AES-CBC",
-            //         iv
-            //     },
-            //     secretKey,
-            //     ciphertext.slice(len * 2)
-
-            // ).then(decrypted => {
-                document.getElementById('decryptedOutput').textContent = decrypted;
+        // console.log("Desencriptado:", decrypted);
+            document.getElementById('decryptedOutput').textContent = decrypted;
          } catch (error) {
-       
-   
-            // }).catch(err => {
                 document.getElementById('decryptedOutput').textContent = "ERROR: wrong key!";
-                //console.error(err);
-            // });
          console.error("Error:", error);
              }
         };

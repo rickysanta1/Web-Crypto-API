@@ -174,7 +174,7 @@
             word-break: break-all;
         }
         
-        .output::after,
+.output::after,
 .output::before {
   position: absolute;
   display: none;  /* initially hide it from view */

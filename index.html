@@ -67,7 +67,11 @@ if(this.textContent!="")  {
 
     writeClipboardText(this.textContent);
      this.classList.add("active");
-    this.setAttribute("data-tooltip","Copiado!")
+  this.setAttribute("data-tooltip","Copiado!");
+  setTimeout(()=>{
+    this.classList.remove("active");
+    this.setAttribute("data-tooltip","Click para Copiar!")
+  },2000);
     console.log("Copiado!");
 }
 });
